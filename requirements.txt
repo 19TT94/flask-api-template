@@ -1,8 +1,5 @@
 Flask==1.1.1
 
-# Application Server
-gunicorn==20.0.4
-
 # Resources
 flask-restful==0.3.8
 click==6.4
