@@ -4,18 +4,6 @@ This is a project template for an API build in Flask. It makes use of [FlaskREST
 
 ## Install
 
-```
-git clone git@github.com:19TT94/flask-api-template.git
-cd flask-api-template
-python -m venv venv
-. venv/bin/activate
-pip install -e .
-
-```
-
-Install
-Be sure to use the same version of the code as the version of the docs you're reading. You probably want the latest tagged version, but the default Git version is the master branch.
-
 **Clone the Repository:**
 ```
 git clone git@github.com:19TT94/flask-api-template.git
