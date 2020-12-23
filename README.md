@@ -5,25 +5,23 @@ This is a project template for an API build in Flask. It makes use of [FlaskREST
 ## Install
 
 **Clone the Repository:**
-```
+```bash
 git clone git@github.com:19TT94/flask-api-template.git
 cd flask-api-template
 ```
 
 **Create a virtualenv and activate it:**
-```
+```bash
 python3 -m venv venv
 . venv/bin/activate
 pip install -r requirements.txt
 pip install -e .
+cp env_example .env
+# configure settings in newly created env file
 ```
 
 ## Run
-```
-export FLASK_APP=api
-export FLASK_ENV=development
-flask run
-```
+`flask run`
 
 ## Test
 `pytest`

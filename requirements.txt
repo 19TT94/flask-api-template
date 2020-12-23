@@ -1,5 +1,8 @@
 Flask==1.1.1
 
+# Environment
+python-dotenv==0.15.0
+
 # Resources
 flask-restful==0.3.8
 flask-sqlalchemy==2.4.4
