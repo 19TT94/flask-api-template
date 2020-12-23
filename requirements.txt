@@ -1,0 +1,13 @@
+Flask==1.1.1
+
+# Application Server
+gunicorn==20.0.4
+
+# Resources
+flask-restful==0.3.8
+click==6.4
+
+# Testing
+pytest==6.2.1
+pytest-cov==2.10
+pylint==2.6.0
