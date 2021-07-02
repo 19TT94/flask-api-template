@@ -11,7 +11,10 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
-        'click'
+        'click',
+        "pylint",
+        "click",
+        "sqlalchemy<1.4"
     ],
     extras_require={
       "test": [
