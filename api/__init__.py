@@ -24,12 +24,6 @@ pg_host = os.environ.get("POSTGRES_HOST")
 pg_port = os.environ.get("POSTGRES_PORT")
 pg_name = os.environ.get("POSTGRES_DB")
 
-session = os.environ.get("SESSION_TYPE")
-redis_host = os.environ.get("REDIS_HOST")
-redis_user = os.environ.get("REDIS_USER")
-redis_password= os.environ.get("REDIS_PASSWORD")
-redis_port = os.environ.get("REDIS_PORT")
-
 def create_app(settings_override=None) -> None:
     """Create and configure the app -> api"""
     app = Flask(__name__, instance_relative_config=True)
@@ -45,16 +39,6 @@ def create_app(settings_override=None) -> None:
     )
 
     ssl = app.config["ENV"] != "development"
-
-    rdriver = redis.Redis(
-        host=redis_host,
-        port=redis_port,
-        password=redis_password,
-        db=0,
-        ssl=ssl,
-        ssl_cert_reqs=None
-    )
-    app.redis = rdriver
 
     # SQLAlchemy Config
     db_uri = "postgresql+psycopg2://{user}:{pw}@{host}:{port}/{db}".format(

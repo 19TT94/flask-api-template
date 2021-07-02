@@ -1,23 +1,27 @@
-# Hero Builder API - Flask API
+# Flask API Template
 
-This project was bootstrapped with Flask. It makes use of [FlaskRESTful](https://flask-restful.readthedocs.io/en/latest/quickstart.html) serves as the backend for the Hero Builder product. Hero Builder is, generally speaking, a form builder and scheduling app for managing Water/Wastewater Treatment Facilities.
-
-# Development
-
-This project relies on the [Hero Builder Client](https://github.com/Hero-Services/hero-builder-client) user facing code in the browser. In order to run the full environment please follow the steps to set up the api as well. You can run each service separatly or use the docker-compose file found the [Hero BUilder](https://github.com/Hero-Services/hero-builder) parent repo.
+This is a project template for an API build in Flask.
 
 ## Install
 
 **Clone the Repository:**
 
 ```bash
-git clone git@github.com:Hero-Services/hero-builder-api.git
+git clone git@github.com:19TT94/flask-api-template.git
 cd flask-api-template
+```
+
+**Database**
+This template version requires a running PostgreSQL instance available.
+To build and run a db instance use the following.
+
+```zsh
+docker run --name postgres-db -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
 
 **Configure the .env**
 
-```bash
+```zsh
 cp env_example .env
 ```
 
@@ -28,9 +32,9 @@ If you are following the instructions from the parent repo, follow the steps bel
 
 ## Run with Docker
 
-```bash
-docker build -t hero-builder-api
-docker run -it --rm -v ${PWD}:/hero-builder-api -p 5000:5000 hero-builder-api
+```zsh
+docker build -t {image_name} -f {docker_file} .
+docker run -it --rm -v ${PWD}:/flask-api-template -p 5000:5000 {image_name}
 ```
 
 At this point the API should be running.
@@ -39,16 +43,16 @@ At this point the API should be running.
 
 The available api commands can be found by running
 
-```bash
-docker exec -it hero-builder-api flask --help
+```zsh
+docker exec -it flask-api-template flask --help
 ```
 
 **Generate Key**
 
 The project requires an api key to specified in the `.env`. This can be generated using the command
 
-```bash
-docker exec -it hero-builder-api flask generate_key
+```zsh
+docker exec -it flask-api-template flask generate_key
 ```
 
 Copy the key from the console and add it to your `.env`'s `SECRET_KEY`
@@ -59,8 +63,8 @@ The api is configured for a live and test db. Create a database using the `creat
 
 Note: This command _WILL_ delete any existing data in the database and should only be ran once.
 
-```bash
-docker exec -it hero-builder-api flask create-db --test
+```zsh
+docker exec -it flask-api-template flask create-db --test
 ```
 
 **Migrations**
@@ -69,32 +73,25 @@ The api uses [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/) an
 
 In order to run a migration run
 
-```bash
-docker exec -it hero-builder-api flask db upgrade
+```zsh
+docker exec -it flask-api-template flask db upgrade
 ```
 
 To create a new migration run
 
-```bash
-docker exec -it hero-builder-api flask db migrate -m "{message to describe migration}"
+```zsh
+docker exec -it flask-api-template flask db migrate -m "{message to describe migration}"
 ```
 
 **Seeders**
 
 In order to run the seeder use the `db-seed` commnad. If you add the `--dev` flag it will seed the database with test data.
 
-```bash
-docker exec -it hero-builder-api flask db-seed
+```zsh
+docker exec -it flask-api-template flask db-seed
 ```
 
 Note: This command _WILL_ delete any existing data in the database and should only be ran once.
-
-**Create your super user**
-Run the following command to create your user:
-
-```bash
-docker exec -it hero-builder-api flask create-user --super
-```
 
 ## Testing
 
@@ -102,20 +99,20 @@ There are commands available via Flask for testing and test coverage.
 
 To run the tests
 
-```bash
+```zsh
 # all tests
-docker exec -it hero-builder-api flask test
+docker exec -it flask-api-template flask test
 # specific
-docker exec -it hero-builder-api flask test api/tests/{test_file_name}
+docker exec -it flask-api-template flask test api/tests/{test_file_name}
 # coverage
-docker exec -it hero-builder-api flask cov
+docker exec -it flask-api-template flask cov
 ```
 
 ## Run the API as a "Detached Service"
 
 **Create a virtualenv and activate it:**
 
-```bash
+```zsh
 python3 -m venv venv
 . venv/bin/activate
 pip install -r requirements.txt

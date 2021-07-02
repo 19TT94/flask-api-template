@@ -2,7 +2,7 @@ FROM python:3.8.3-slim-buster
 
 LABEL maintainer="Taylor Tobin <taylort@frm-ops.com>"
 
-WORKDIR /hero-builder-api
+WORKDIR /flask-api-template
 
 COPY requirements.txt ./
 

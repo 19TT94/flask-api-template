@@ -7,6 +7,6 @@ class Example(MethodView):
         "example_param": String(data_key="exampleParam")
     }
 
-    @use_args(address_params, location="json")
+    @use_args(example_params, location="json")
     def get(self):
         return {"example": {"name": "Example Response"}}
