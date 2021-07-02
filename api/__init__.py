@@ -1,26 +1,39 @@
-import os
+import os, logging
 from flask import Flask
-from flask_restful import Api
+from flask_cors import CORS
+ 
+# API Routes
 from api.router import initialize_routes
 
-def create_app(test_config=None):
-  # create and configure the app
-  app = Flask(__name__, instance_relative_config=True)
+# Commands
+from api.commands import initialize_commands
 
-  if test_config is None:
-    # load the instance config, if it exists, when not testing
-    app.config.from_pyfile('config.py', silent=True)
-  else:
-    # load the test config if passed in
-    app.config.from_mapping(test_config)
+# Config Variables
+secret_key = os.environ.get("SECRET_KEY")
 
-  # ensure the instance folder exists
-  try:
-    os.makedirs(app.instance_path)
-  except OSError:
-    pass
+def create_app(settings_override=None) -> None:
+    """Create and configure the app -> api"""
+    app = Flask(__name__, instance_relative_config=True)
 
-  api = Api(app)
-  initialize_routes(api)
+    app.config["SECRET_KEY"] = secret_key
 
-  return app
+    logging.basicConfig(format=f"%(asctime)s %(levelname)s %(name)s : %(message)s")
+
+    CORS(
+        app,
+        origins=os.environ.get("CLIENT_APP"),
+        supports_credentials=True
+    )
+
+    ssl = app.config["ENV"] != "development"
+
+    if settings_override:
+        app.config.update(settings_override)
+
+    # API Initialization
+    initialize_routes(app)
+
+    # Click Commands
+    initialize_commands(app)
+
+    return app

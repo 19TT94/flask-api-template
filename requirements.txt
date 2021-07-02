@@ -1,14 +1,21 @@
-Flask==1.1.1
+Flask==2.0.1
 
 # Environment
-python-dotenv==0.15.0
+python-dotenv==0.17.1
 
 # Resources
-flask-restful==0.3.8
-flask-sqlalchemy==2.4.4
-click==6.4
+pyjwt==2.1.0
+click==8.0.1
+webargs==8.0.0
+faker==8.1.2
+
+# Flask Packages
+flask-cors==3.0.10
 
 # Testing
-pytest==6.2.1
+pytest==6.2.4
 pytest-cov==2.10
+
+# Linting
+setuptools==51.1.0
 pylint==2.6.0
