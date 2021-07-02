@@ -11,24 +11,11 @@ git clone git@github.com:19TT94/flask-api-template.git
 cd flask-api-template
 ```
 
-**Database**
-This template version requires a running PostgreSQL instance available.
-To build and run a db instance use the following.
-
-```zsh
-docker run --name postgres-db -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
-```
-
 **Configure the .env**
 
 ```zsh
 cp env_example .env
 ```
-
-- Update the env file with credentials to your local Postgres Database.
-- Add a "Super User", this user will be created by the seeder, so there is always existing user credentials.
-
-If you are following the instructions from the parent repo, follow the steps below otherwise.
 
 ## Run with Docker
 
@@ -57,42 +44,6 @@ docker exec -it flask-api-template flask generate_key
 
 Copy the key from the console and add it to your `.env`'s `SECRET_KEY`
 
-**Initialize the Databases**
-
-The api is configured for a live and test db. Create a database using the `create-db` command with the `--test` flag for a test db.
-
-Note: This command _WILL_ delete any existing data in the database and should only be ran once.
-
-```zsh
-docker exec -it flask-api-template flask create-db --test
-```
-
-**Migrations**
-
-The api uses [Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/) and [Alembic](https://alembic.sqlalchemy.org/en/latest/) to run migrations.
-
-In order to run a migration run
-
-```zsh
-docker exec -it flask-api-template flask db upgrade
-```
-
-To create a new migration run
-
-```zsh
-docker exec -it flask-api-template flask db migrate -m "{message to describe migration}"
-```
-
-**Seeders**
-
-In order to run the seeder use the `db-seed` commnad. If you add the `--dev` flag it will seed the database with test data.
-
-```zsh
-docker exec -it flask-api-template flask db-seed
-```
-
-Note: This command _WILL_ delete any existing data in the database and should only be ran once.
-
 ## Testing
 
 There are commands available via Flask for testing and test coverage.
@@ -109,6 +60,8 @@ docker exec -it flask-api-template flask cov
 ```
 
 ## Run the API as a "Detached Service"
+
+If you prefer to run the application without docker remove the Dockerfiles and follow the commands below.
 
 **Create a virtualenv and activate it:**
 

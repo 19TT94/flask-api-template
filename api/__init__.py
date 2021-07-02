@@ -1,14 +1,7 @@
-import os, redis, logging
+import os, logging
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from flask_migrate import Migrate
 from flask_cors import CORS
  
-# Migrations
-from api.database import db, migrate
-from api.database import initialize_models
-
 # API Routes
 from api.router import initialize_routes
 
@@ -17,12 +10,6 @@ from api.commands import initialize_commands
 
 # Config Variables
 secret_key = os.environ.get("SECRET_KEY")
-
-user = os.environ.get("POSTGRES_USER")
-pg_password = os.environ.get("POSTGRES_PASSWORD")
-pg_host = os.environ.get("POSTGRES_HOST")
-pg_port = os.environ.get("POSTGRES_PORT")
-pg_name = os.environ.get("POSTGRES_DB")
 
 def create_app(settings_override=None) -> None:
     """Create and configure the app -> api"""
@@ -40,29 +27,8 @@ def create_app(settings_override=None) -> None:
 
     ssl = app.config["ENV"] != "development"
 
-    # SQLAlchemy Config
-    db_uri = "postgresql+psycopg2://{user}:{pw}@{host}:{port}/{db}".format(
-        user=user,
-        pw=pg_password,
-        host=pg_host,
-        port=pg_port,
-        db=pg_name
-    )
-
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
     if settings_override:
         app.config.update(settings_override)
-
-    engine = create_engine(db_uri)
-    engine.connect()
-
-    db.init_app(app)
-
-    initialize_models(app)
-
-    migrate.init_app(app, db, directory="api/database/migrations")
 
     # API Initialization
     initialize_routes(app)
